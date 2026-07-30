@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById("openButton");
     const content = document.getElementById("content");
 
-    //==============================
+    //=====================================
     // DESCHIDERE INVITAȚIE
-    //==============================
+    //=====================================
 
     if (button && hero && content) {
 
@@ -19,10 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const rect = button.getBoundingClientRect();
 
                 plane.style.left = rect.left + rect.width / 2 + "px";
-                plane.style.top = rect.top + 15 + "px";
+                plane.style.top = rect.top + "px";
                 plane.style.opacity = "1";
 
                 plane.animate(
+
                     [
                         {
                             transform: "translate(0,0) rotate(0deg)"
@@ -37,226 +38,181 @@ document.addEventListener("DOMContentLoaded", () => {
                             transform: "translate(900px,-300px) rotate(35deg)"
                         }
                     ],
+
                     {
                         duration: 1800,
                         easing: "ease-in-out",
                         fill: "forwards"
                     }
+
                 );
+
             }
 
             button.style.opacity = "0";
 
             setTimeout(() => {
 
-                button.style.display = "none";
+                hero.classList.add("open-book");
 
-               hero.classList.add("open-book");
-              setTimeout(() => {
+            },300);
 
-    content.style.display = "block";
+            setTimeout(() => {
 
-window.scrollTo({
-    top: 0,
-    behavior: "instant"
-});
+                hero.style.display = "none";
 
-    requestAnimationFrame(() => {
+                content.style.display = "block";
 
-        content.classList.add("show");
+                requestAnimationFrame(()=>{
 
-    });
+                    content.classList.add("show");
 
-},900); 
+                });
 
-            }, 300);
+                window.scrollTo({
+
+                    top:0,
+                    behavior:"instant"
+
+                });
+
+            },900);
 
         });
 
     }
 
-    //==============================
+    //=====================================
     // MUZICĂ
-    //==============================
+    //=====================================
 
     const musicBtn = document.getElementById("musicBtn");
     const music = document.getElementById("music");
 
-    if (musicBtn && music) {
+    if(musicBtn && music){
 
         let playing = false;
 
-        musicBtn.addEventListener("click", () => {
+        musicBtn.addEventListener("click",()=>{
 
-            if (playing) {
+            if(playing){
 
                 music.pause();
 
-                musicBtn.innerHTML =
-                    '<i class="fa-solid fa-music"></i>';
+                musicBtn.innerHTML='<i class="fa-solid fa-music"></i>';
 
-            } else {
+            }else{
 
                 music.play();
 
-                musicBtn.innerHTML =
-                    '<i class="fa-solid fa-pause"></i>';
+                musicBtn.innerHTML='<i class="fa-solid fa-pause"></i>';
 
             }
 
-            playing = !playing;
+            playing=!playing;
 
         });
 
     }
+   //=====================================
+    // COUNTDOWN
+    //=====================================
 
-    //==============================
-    // RSVP WHATSAPP
-    //==============================
+    const days = document.getElementById("days");
+    const hours = document.getElementById("hours");
+    const minutes = document.getElementById("minutes");
+    const seconds = document.getElementById("seconds");
+
+    if(days && hours && minutes && seconds){
+
+        const weddingDate = new Date("June 6, 2026 16:00:00").getTime();
+
+        function updateCountdown(){
+
+            const now = new Date().getTime();
+
+            const distance = weddingDate - now;
+
+            if(distance <= 0){
+
+                days.textContent = "0";
+                hours.textContent = "0";
+                minutes.textContent = "0";
+                seconds.textContent = "0";
+
+                return;
+
+            }
+
+            days.textContent = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+            hours.textContent = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            minutes.textContent = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+            seconds.textContent = Math.floor((distance % (1000 * 60)) / 1000);
+
+        }
+
+        updateCountdown();
+
+        setInterval(updateCountdown,1000);
+
+    }
+
+    //=====================================
+    // ANIMAȚII LA SCROLL
+    //=====================================
+
+    const sections = document.querySelectorAll(".chapter");
+
+    const observer = new IntersectionObserver((entries)=>{
+
+        entries.forEach(entry=>{
+
+            if(entry.isIntersecting){
+
+                entry.target.classList.add("show");
+
+            }
+
+        });
+
+    },{
+        threshold:0.15
+    });
+
+    sections.forEach(section=>{
+
+        observer.observe(section);
+
+    });
+
+    //=====================================
+    // RSVP
+    //=====================================
 
     const confirmBtn = document.getElementById("confirmBtn");
     const declineBtn = document.getElementById("declineBtn");
 
-    const whatsappNumber = "40762648552";
+    if(confirmBtn){
 
-    function sendWhatsApp(status) {
+        confirmBtn.addEventListener("click",()=>{
 
-        const nume =
-            document.getElementById("nume")?.value || "-";
-
-        const adulti =
-            document.getElementById("adulti")?.value || "0";
-
-        const copii =
-            document.getElementById("copii")?.value || "0";
-
-        const meniu =
-            document.getElementById("meniu")?.value || "-";
-
-        const alergii =
-            document.getElementById("alergii")?.value || "Nu";
-
-        const mesaj =
-            document.getElementById("mesaj")?.value || "-";
-
-        const text =
-
-`Bună, Bogdan și Ramona ❤️
-
-Confirmare invitație:
-
-Nume: ${nume}
-
-Răspuns:
-${status}
-
-Adulți: ${adulti}
-
-Copii: ${copii}
-
-Meniu:
-${meniu}
-
-Alergii:
-${alergii}
-
-Mesaj:
-${mesaj}
-
-Vă mulțumim! 🤍`;
-
-        const url =
-            "https://wa.me/" +
-            whatsappNumber +
-            "?text=" +
-            encodeURIComponent(text);
-
-        window.open(url, "_blank");
-
-    }
-
-    if (confirmBtn) {
-
-        confirmBtn.addEventListener("click", () => {
-
-            sendWhatsApp("♡ Vom fi alături de voi");
+            alert("Mulțumim! În versiunea finală, confirmarea va fi trimisă automat.");
 
         });
 
     }
 
-    if (declineBtn) {
+    if(declineBtn){
 
-        declineBtn.addEventListener("click", () => {
+        declineBtn.addEventListener("click",()=>{
 
-            sendWhatsApp("♡ Ne pare rău, nu putem ajunge");
+            alert("Îți mulțumim că ne-ai anunțat!");
 
         });
 
     }
-
-});
-const planes = document.querySelectorAll(".divider-plane");
-
-planes.forEach((plane) => {
-
-    plane.animate(
-        [
-            { transform: "translateY(0px)" },
-            { transform: "translateY(-6px)" },
-            { transform: "translateY(0px)" }
-        ],
-        {
-            duration: 3500,
-            iterations: Infinity,
-            easing: "ease-in-out"
-        }
-    );
-
-});
-const observer = new IntersectionObserver((entries)=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("show");
-
-        }
-
-    });
-
-},{
-    threshold:.3
-});
-
-document.querySelectorAll(".photo-frame").forEach(el=>{
-
-    observer.observe(el);
-
-});
-const cards = document.querySelectorAll(".family-card, .event-card");
-
-const cardObserver = new IntersectionObserver((entries)=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.classList.add("show");
-
-        }
-
-    });
-
-},{
-    threshold:.2
-});
-
-cards.forEach((card,index)=>{
-
-    card.style.transitionDelay=`${index*0.15}s`;
-
-    cardObserver.observe(card);
 
 });
