@@ -526,51 +526,38 @@ FAMILIE
 }
 
 .family-card{
-
     background:white;
-
-    border-radius:22px;
-
-    padding:40px 25px;
-
+    border-radius:24px;
+    padding:40px 30px;
     text-align:center;
-
     box-shadow:var(--shadow);
+    border:1px solid rgba(184,138,74,.15);
+    transition:.35s;
+}
 
+.family-card:hover{
+    transform:translateY(-6px);
 }
 
 .family-card h4{
-
-    font-size:18px;
-
-    letter-spacing:2px;
-
+    font-size:14px;
     text-transform:uppercase;
-
+    letter-spacing:3px;
     color:var(--gold);
-
-    margin-bottom:10px;
-
+    margin-bottom:12px;
 }
 
 .family-card h3{
-
     font-family:"Great Vibes",cursive;
-
-    font-size:38px;
-
+    font-size:42px;
+    color:var(--gold-dark);
+    margin-bottom:14px;
     font-weight:400;
-
-    margin-bottom:18px;
-
 }
 
 .family-card p{
-
-    font-size:28px;
-
-    line-height:1.7;
-
+    font-size:20px;
+    line-height:1.8;
 }
 
 /*==================================================
